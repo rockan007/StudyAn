@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">StudyAn</string>
+    <string name="action_settings">Settings</string>
+    <string name="welcome">你好</string>
+    <string name="action_bar">标题栏</string>
+    <string name="study_first">初学</string>
+    <!--MainActivity-->
+    <string name="true_false">true_false</string>
+    <string name="next_step">next_question</string>
+    <string name="back_step">back_question</string>
+    <string name="answer_true">true</string>
+    <string name="answer_false">false</string>
+    <string name="question_mountain">Mount Tai is the highest mountain in the world</string>
+    <string name="question_river">Yellow River is the longest river in north of China</string>
+    <string name="question_city">BeiJIng is the clearest city in China</string>
+    <string name="question_animal">Manchurian Tiger is the only tiger in China</string>
+    <string name="question_food">Chinese hamburger is the most delicious food in the world</string>
+    <string name="fragment">fragment</string>
+    <string name="list_fragment">LFragment</string>
+    <!--InteractiveActivity-->
+    <string name="show_answer_here">show answer here</string>
+    <string name="show_answer">show answer</string>
+    <!--Fragment-->
+    <string name="editText_hint">please input the crime title</string>
+    <string name="crime_title">TITLE</string>
+    <string name="crimes">crimes</string>
+    <string name="crime_details">DETAILS</string>
+    <string name="crime_isSolved">isSolved</string>
+    <!-- viewpager_fragment-->
+    <string name="communist_party">共产党</string>
+    <string name="democratic_party">民主党</string>
+    <string name="republican_party">共和党</string>
+    <string name="freedom_party">自由党</string>
+    <string name="slide_andClick_fragments">SCFragments</string>
+    <string name="noCommunistParty_noNewChina">没有共产党就没有新中国</string>
+    <string name="iron_militaryCamp_runningWater_soldiers">铁打的营盘流水的兵</string>
+    <string name="lifeExpensive_lovePriceHigher_noFreedomNothingWorth">生命诚可贵\n爱情价更高\n若为自由故\n两者皆可抛</string>
+    <string name="SVCFragments">SVCFragments</string>
+    <string name="new_crime">new crime</string>
+    <string name="QvodPlayer">快播案审查过程中，人民日报、网信办等人民报纸和机构发声称要惩办快播、或者带有既定犯罪的口气评论快播案，疑干预司法公正</string>
+    <string name="under_the_dome">《穹顶之下》:一篇关注中国雾霾的视频，已经上映引起群众强烈关注，然没几天在各大网站莫名消失，仿佛只能与共产党有关，
+    也就是这几天，共产党开会大谈依法治国，在这里只能说共产党脸皮真厚</string>
+    <string name="out_of_the_system">《走出秦制》一部历史评论书籍，上架没几天，就在各大书店销声匿迹。不用说，共产党的手笔</string>
+    <string name="poacher_share_photo">“几只鸟”被判十年，他们说有法律依据，去西藏偷猎，并嚣张的晒上了网，最后连个屁都没有。所以嚣张有嚣张的资本，人民群众要有人民群众的觉悟</string>
+    <string name="oil_restriction">油价设限，当低于40美元时，不降价，当高于130美元时，不涨价。这就是市场经济，发改委又出来秀存在感了。跟网络消费限额一个德行，共产党是傻啊，还是傻啊，还是傻啊。
+    不过人家是在油价低的时候，出的这政策，是在网购迅猛发展的时候出的这政策，这是怕人民群众生活太方便，生活成本太低，中国发展太快，用心良苦啊。一马平川多不锻炼人啊，怎么也得在路上放座大山啊</string>
+    <string name="url_connect">UrlConnect</string>
+    <string name="expandable">expandable</string>
+    <string name="cheat_for_answer">cheat</string>
+    <string name="you_are_cheater">你个骗子！</string>
+    <string name="mediaPlayer_start">Start</string>
+    <string name="mediaPlayer_stop">Stop</string>
+    <string name="mediaPlayer_pause">Pause</string>
+    <string name="media_player">Media Player</string>
+    <string name="show_subtitle">show subtitle</string>
+    <string name="subtitle">subtitle</string>
+    <string name="hide_subtitle">hide subtitle</string>
+    <string name="crime_delete">delete crime</string>
+    <string name="date_picker_title">请选择日期</string>
+    <string name="date_picker_OK">OK</string>
+    <string name="crime_time">时间设置</string>
+    <string name="change_date">设置日期</string>
+    <string name="change_time">设置时间</string>
+    <string name="choose_change">请选择</string>
+    <string name="baidu">https://www.baidu.com/</string>
+    <string name="sina">http://www.sina.com/</string>
+    <string name="wang_yi">http://www.163.com/</string>
+    <string name="feng_huang">http://www.ifeng.com/</string>
+    <string name="web_list">webList</string>
+    <string name="picture">picture</string>
+    <string name="doit">doit</string>
+    <string name="location">location</string>
+    <string name="volley">Volley</string>
+    <string name="draw">draw</string>
+</resources>

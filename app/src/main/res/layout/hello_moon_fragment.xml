@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@mipmap/fly"
+        android:layout_weight="1"/>
+    <SeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TableRow
+        android:gravity="center|bottom"
+        android:layout_weight="0">
+        <Button
+            android:id="@+id/mediaPayer_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mediaPlayer_start"/>
+        <Button
+            android:id="@+id/mediaPayer_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mediaPlayer_pause"/>
+
+        <Button
+            android:id="@+id/mediaPayer_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mediaPlayer_stop"/>
+    </TableRow>
+
+
+</TableLayout>
