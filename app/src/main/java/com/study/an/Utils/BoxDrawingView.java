@@ -28,6 +28,7 @@ public class BoxDrawingView extends View {
         mCurrPaint = new Paint();
         mCurrPaint.setColor(0x22ff0000);
         mBackGroundPaint = new Paint();
+
         mBackGroundPaint.setColor(0xfff8efe0);
     }
 
