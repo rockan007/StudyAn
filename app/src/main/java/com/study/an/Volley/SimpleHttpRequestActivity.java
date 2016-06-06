@@ -3,10 +3,10 @@ package com.study.an.Volley;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
@@ -18,13 +18,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.study.an.Utils.WebSetUtils;
 import com.study.an.all.R;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
+ * Volley加载图片的两种方式
  * Created by admin on 2016/5/31.
  */
 public class SimpleHttpRequestActivity extends AppCompatActivity {
@@ -32,10 +29,13 @@ public class SimpleHttpRequestActivity extends AppCompatActivity {
     RequestQueue mQueue;
     ImageLoader imageLoader;
     NetworkImageView mNetworkImageView;
+    ArrayMap<String,String> mArrayMap=new ArrayMap<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_request);
+        mArrayMap.clear();
+        mArrayMap.put("1","s");
 //        mWebView=(WebView)findViewById(R.id.webView);
 //        WebSetUtils.getWebSetting(this,mWebView);
         mQueue= Volley.newRequestQueue(this);
@@ -67,8 +67,8 @@ public class SimpleHttpRequestActivity extends AppCompatActivity {
                 }
             }){
         @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> map = new HashMap<String, String>();
+        protected ArrayMap<String, String> getParams() throws AuthFailureError {
+            ArrayMap<String, String> map = new ArrayMap<>();
             map.put("params1", "value1");
             map.put("params2", "value2");
             return map;
