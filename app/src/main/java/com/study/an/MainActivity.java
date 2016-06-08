@@ -4,17 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
-import com.study.an.Draw.DragAndDrawActivity;
-import com.study.an.Volley.SimpleHttpRequestActivity;
-import com.study.an.all.R;
 import com.study.an.CriminalIntent.CrimeListActivity;
+import com.study.an.Draw.DragAndDrawActivity;
 import com.study.an.MediaPlayer.HelloMoonActivity;
 import com.study.an.TrueFalse.TrueFalseActivity;
+import com.study.an.Volley.SimpleHttpRequestActivity;
+import com.study.an.all.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +25,7 @@ import java.util.HashMap;
 /**
  * Created by admin on 2016/1/20.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
     private int[] mImage = {R.mipmap.bar_back, R.mipmap.bar_creatgroup, R.mipmap.bar_menu, R.mipmap.bar_menu_changejiaobao,
             R.mipmap.bar_menu_changeunit, R.mipmap.bar_menu_chat, R.mipmap.bar_menu_dailywork, R.mipmap.bar_menu_dt, R.mipmap.bar_menu_exit,R.mipmap.bar_menu_exit};
     private int[] mName = {R.string.true_false, R.string.expandable, R.string.crime_title, R.string.media_player, R.string.web_list, R.string.picture, R.string.doit, R.string.location,R.string.volley,R.string.draw};
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setLogo(R.mipmap.ic_launcher);
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
-
+        mToolbar.setOnMenuItemClickListener(this);
         mGridView = (GridView) findViewById(R.id.grid_view);
         ArrayList<HashMap<String, Object>> gridListItem = new ArrayList<>();
 //        ArrayList<String> list=new ArrayList();
@@ -106,5 +109,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        mToolbar.setNavigationIcon(R.drawable.ic_favorite_red_400_18dp);
+        mToolbar.setLogo(R.drawable.ic_pets_cyan_a200_18dp);
+        mToolbar.setTitle("StudyAn");
+        mToolbar.setSubtitle("2016.06.08");
+    }
+    //Toolbar增加按钮
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
+    // menu的点击事件
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Toast.makeText(getApplicationContext(),"人才是我",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }
