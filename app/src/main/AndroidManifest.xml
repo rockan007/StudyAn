@@ -58,6 +58,7 @@
         <activity android:name="com.study.an.location.locationActivity"/>
         <activity android:name="com.study.an.Volley.SimpleHttpRequestActivity"/>
         <activity android:name="com.study.an.Draw.DragAndDrawActivity"/>
+        <activity android:name="com.study.an.RecyclerView.RecyclerActivity"/>
     </application>
 
 </manifest>
