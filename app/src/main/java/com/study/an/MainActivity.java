@@ -16,6 +16,7 @@ import com.study.an.CriminalIntent.CrimeListActivity;
 import com.study.an.Draw.DragAndDrawActivity;
 import com.study.an.MediaPlayer.HelloMoonActivity;
 import com.study.an.RecyclerView.RecyclerActivity;
+import com.study.an.RecyclerView.StaggeredGridLayoutActivity;
 import com.study.an.TrueFalse.TrueFalseActivity;
 import com.study.an.Volley.SimpleHttpRequestActivity;
 import com.study.an.all.R;
@@ -28,8 +29,8 @@ import java.util.HashMap;
  */
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
     private int[] mImage = {R.mipmap.bar_back, R.mipmap.bar_creatgroup, R.mipmap.bar_menu, R.mipmap.bar_menu_changejiaobao,
-            R.mipmap.bar_menu_changeunit, R.mipmap.bar_menu_chat, R.mipmap.bar_menu_dailywork, R.mipmap.bar_menu_dt, R.mipmap.bar_menu_exit,R.mipmap.bar_menu_exit,R.drawable.ic_favorite_red_400_18dp};
-    private int[] mName = {R.string.true_false, R.string.expandable, R.string.crime_title, R.string.media_player, R.string.web_list, R.string.picture, R.string.doit, R.string.location,R.string.volley,R.string.draw,R.string.recycler};
+            R.mipmap.bar_menu_changeunit, R.mipmap.bar_menu_chat, R.mipmap.bar_menu_dailywork, R.mipmap.bar_menu_dt, R.mipmap.bar_menu_exit,R.mipmap.bar_menu_exit,R.drawable.ic_favorite_red_400_18dp,R.drawable.ic_pets_cyan_a200_18dp};
+    private int[] mName = {R.string.true_false, R.string.expandable, R.string.crime_title, R.string.media_player, R.string.web_list, R.string.picture, R.string.doit, R.string.location,R.string.volley,R.string.draw,R.string.recycler,R.string.staggered};
     private GridView mGridView;
     private String[] from = {"image", "name"};
     private Toolbar mToolbar;
@@ -108,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                     case 10:
                         Intent intent10 = new Intent(MainActivity.this, RecyclerActivity.class);
                         startActivity(intent10);
+                        break;
+                    case 11:
+                        Intent intent11 = new Intent(MainActivity.this, StaggeredGridLayoutActivity.class);
+                        startActivity(intent11);
                         break;
                     default:
                         break;

@@ -73,4 +73,5 @@
     <string name="volley">Volley</string>
     <string name="draw">draw</string>
     <string name="recycler">recycler</string>
+    <string name="staggered">staggered</string>
 </resources>
