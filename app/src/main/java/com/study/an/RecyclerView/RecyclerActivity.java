@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import com.study.an.all.R;
@@ -34,7 +35,7 @@ public class RecyclerActivity extends AppCompatActivity{
         //设置Item添加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
-//        mRecyclerView.addItemDecoration(RecyclerView.ItemDecoration);
+        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
         RecyclerAdapter mRecyclerAdapter;
         mRecyclerView.setAdapter(mRecyclerAdapter=new RecyclerAdapter(this));
         ArrayList<String> names=new ArrayList<>();
