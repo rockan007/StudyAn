@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
+ * 数据库
  * Created by admin on 2016/7/1.
  */
 public class SQLMainActivity extends AppCompatActivity {
