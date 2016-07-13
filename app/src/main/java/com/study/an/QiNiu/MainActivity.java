@@ -13,11 +13,9 @@ import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 import com.study.an.all.R;
-
 import org.json.JSONObject;
-
 import java.io.IOException;
-
+import java.util.Arrays;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -173,7 +171,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 byte[] bytes=response.body().bytes();
-                Log.d(TAG,new String(bytes));
+                String s= Arrays.toString(bytes);
+                Log.d(TAG,s);
             }
         });
     }
