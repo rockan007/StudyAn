@@ -13,9 +13,12 @@ import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 import com.study.an.all.R;
+
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Arrays;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -134,27 +137,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 simpleUpload();
                 break;
             case R.id.btn_downLand:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            getBack();
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+                try {
+                    getBack() ;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 break;
             default:
                 break;
         }
     }
-    private String getUrl(String fileName){
-        return UploadToken.getDownLoadToken(fileName,3600);
+
+    private String getUrl(String fileName) {
+        return UploadToken.getDownLoadToken(fileName, 3600);
     }
 
-    private void getBack()throws IOException{
+    private void getBack() throws IOException {
         //创建OkHttpClient对象，用于稍后发起请求
         OkHttpClient client = new OkHttpClient();
         //根据请求URL创建一个Request对象
@@ -165,14 +165,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
+                e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                byte[] bytes=response.body().bytes();
-                String s= Arrays.toString(bytes);
-                Log.d(TAG,s);
+                byte[] bytes = response.body().bytes();
+                String s = Arrays.toString(bytes);
+                Log.d(TAG, s);
             }
         });
     }
