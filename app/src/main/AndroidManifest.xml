@@ -3,6 +3,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -60,6 +61,7 @@
         <activity android:name="com.study.an.Draw.DragAndDrawActivity"/>
         <activity android:name="com.study.an.RecyclerView.RecyclerActivity"/>
         <activity android:name="com.study.an.RecyclerView.StaggeredGridLayoutActivity"/>
+        <activity android:name="com.study.an.QiNiu.MainActivity"/>
     </application>
 
 </manifest>
