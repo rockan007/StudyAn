@@ -142,8 +142,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
                 break;
             default:
                 break;
@@ -161,8 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Request request = new Request.Builder().url(getUrl("7DL55B.txt")).build();
 
         //根据Request对象发起Get同步Http请求
-//        Response response = client.newCall(request).execute();
-        client.newCall(request).enqueue(new Callback() {
+        Call call =client.newCall(request);
+        call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
