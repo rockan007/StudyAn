@@ -12,6 +12,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
+ * 生成上传token
  * Created by admin on 2016/7/12.
  */
 public class UploadToken {
@@ -28,6 +29,20 @@ public class UploadToken {
             return null;
         }
     }
+    public static String getDownLoadToken(String fileName,long time){
+        String DownloadUrl=QiNiuConstant.MAINURL+"/"+fileName+"?e="+addTime(time);
+        try {
+            String sign=hmacSha1(DownloadUrl);
+            String token=QiNiuConstant.ACCESSKEY+":"+sign;
+            String realDownloadUrl=DownloadUrl+"&token="+token;
+            return realDownloadUrl;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public static long addTime(long time){
+        return System.currentTimeMillis()/1000+time;
+    }
 
     public static String hmacSha1(final String base)
             throws NoSuchAlgorithmException, InvalidKeyException {
@@ -38,7 +53,6 @@ public class UploadToken {
             mac.init(secret);
             byte[] digest = mac.doFinal(base.getBytes());
             return Base64.encodeToString(digest, Base64.URL_SAFE).replaceAll("\n", "");
-
         } catch (Exception e) {
             return null;
         }

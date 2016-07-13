@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/simple_upload"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="simple"/>
+
+    <Button
+        android:id="@+id/btn_cancel_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cancel"/>
+
+    <Button
+        android:id="@+id/btn_record_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="record"/>
+    <Button
+        android:id="@+id/btn_downLand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="downland"/>
 
 </LinearLayout>

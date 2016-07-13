@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -16,10 +16,19 @@ import com.study.an.all.R;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Created by admin on 2016/7/6.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "MainActivity";
     UploadManager uploadManager;
     String data;
     String key;
@@ -35,9 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setQiNiuConfiguration();
         findViews();
     }
-    private void findViews(){
 
-        ((Button)findViewById(R.id.simple_upload)).setOnClickListener(this);
+    private void findViews() {
+        findViewById(R.id.simple_upload).setOnClickListener(this);
+        findViewById(R.id.btn_downLand).setOnClickListener(this);
     }
 
     /**
@@ -53,19 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 ////                .recorder(recorder, keyGen)  // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
 //                .zone(Zone.zone0) // 设置区域，指定不同区域的上传域名、备用域名、备用IP。默认 Zone.zone0
 //                .build();
- //重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
+        //重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
         uploadManager = new UploadManager();
 
 
     }
 
     private void simpleUpload() {
-        ImagePutPolicy putPolicy=new ImagePutPolicy(key);
+        ImagePutPolicy putPolicy = new ImagePutPolicy(key);
         putPolicy.setDeadline(3600);
-        token=UploadToken.getUploadToken(putPolicy);
-        byte[] data=new byte[]{ 0, 1, 2, 3};
+        token = UploadToken.getUploadToken(putPolicy);
+        byte[] data = new byte[]{0, 1, 2, 3};
 
-        uploadManager.put(data, key, token,new UpCompletionHandler() {
+        uploadManager.put(data, key, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
                 //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
@@ -121,12 +131,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.simple_upload:
                 simpleUpload();
+                break;
+            case R.id.btn_downLand:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            getBack();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
                 break;
             default:
                 break;
         }
     }
+    private String getUrl(String fileName){
+        return UploadToken.getDownLoadToken(fileName,3600);
+    }
+
+    private void getBack()throws IOException{
+        //创建OkHttpClient对象，用于稍后发起请求
+        OkHttpClient client = new OkHttpClient();
+        //根据请求URL创建一个Request对象
+        Request request = new Request.Builder().url(getUrl("7DL55B.txt")).build();
+
+        //根据Request对象发起Get同步Http请求
+//        Response response = client.newCall(request).execute();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                byte[] bytes=response.body().bytes();
+                Log.d(TAG,new String(bytes));
+            }
+        });
+    }
+
 }
+
