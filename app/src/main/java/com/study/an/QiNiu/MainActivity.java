@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.pili.pldroid.player.widget.PLVideoView;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findViews() {
         findViewById(R.id.simple_upload).setOnClickListener(this);
         findViewById(R.id.btn_downLand).setOnClickListener(this);
+        PLVideoView mVideoView = (PLVideoView) findViewById(R.id.PLVideoView);
+        MediaController mMediaController = new MediaController(this);
+        mVideoView.setMediaController(mMediaController);
     }
 
     /**

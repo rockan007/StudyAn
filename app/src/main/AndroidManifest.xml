@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -62,6 +64,13 @@
         <activity android:name="com.study.an.RecyclerView.RecyclerActivity"/>
         <activity android:name="com.study.an.RecyclerView.StaggeredGridLayoutActivity"/>
         <activity android:name="com.study.an.QiNiu.MainActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.MainActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.PLAudioPlayerActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.PLMediaPlayerActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.PLVideoTextureActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.PLVideoViewActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.VideoFileActivity"/>
+        <activity android:name="com.study.an.QiNiu.playerdemo.VideoViewActivity"/>
     </application>
 
 </manifest>

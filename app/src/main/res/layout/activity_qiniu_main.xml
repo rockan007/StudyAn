@@ -4,6 +4,11 @@
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
               android:orientation="vertical">
+    <com.pili.pldroid.player.widget.PLVideoView
+        android:id="@+id/PLVideoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 
     <TextView
         android:layout_width="match_parent"
