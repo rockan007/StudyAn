@@ -1,10 +1,16 @@
 package com.study.an.QiNiu;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.qiniu.android.http.ResponseInfo;
@@ -31,12 +37,14 @@ import okhttp3.Response;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
+    private ImageView mImageView;
     UploadManager uploadManager;
     String data;
     String key;
     String token;
     UpCompletionHandler handler;
     UpProgressHandler progressHandler;
+    private static final int RESULT_LOAD_IMAGE=1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,9 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findViews() {
         findViewById(R.id.simple_upload).setOnClickListener(this);
         findViewById(R.id.btn_downLand).setOnClickListener(this);
-        PLVideoView mVideoView = (PLVideoView) findViewById(R.id.PLVideoView);
-        MediaController mMediaController = new MediaController(this);
-        mVideoView.setMediaController(mMediaController);
+        findViewById(R.id.btn_duan).setOnClickListener(this);
+//        MediaController mMediaController = new MediaController(this);
+//        mVideoView.setMediaController(mMediaController);
+        mImageView=(ImageView)findViewById(R.id.iv_picture);
     }
 
     /**
@@ -74,11 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void simpleUpload() {
-        ImagePutPolicy putPolicy = new ImagePutPolicy(key);
-        putPolicy.setDeadline(3600);
-        token = UploadToken.getUploadToken(putPolicy);
-        byte[] data = new byte[]{0, 1, 2, 3};
+    private void simpleUpload(String data) {
 
         uploadManager.put(data, key, token, new UpCompletionHandler() {
             @Override
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.simple_upload:
-                simpleUpload();
+                simpleUpload(key);
                 break;
             case R.id.btn_downLand:
                 try {
@@ -147,9 +152,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
                 break;
+            case R.id.btn_duan:
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
+                && data != null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            final String picturePath = cursor.getString(columnIndex);
+            Log.d("PICTUREPATH", picturePath);
+            cursor.close();
+            ImagePutPolicy imagePutPolicy=new ImagePutPolicy(picturePath);
+            imagePutPolicy.setDeadline(3600);
+            token=UploadToken.getUploadToken(imagePutPolicy);
+            key=picturePath;
+            simpleUpload(picturePath);
+            mImageView.setVisibility(View.VISIBLE);
+            mImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));}
     }
 
     private String getUrl(String fileName) {
@@ -177,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, s);
             }
         });
+    }
+    private void setSlide(){
     }
 
 }
