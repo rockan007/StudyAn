@@ -1,13 +1,10 @@
 package com.study.an.QiNiu;
 
 import android.util.Base64;
-
 import com.google.gson.Gson;
 import com.qiniu.android.utils.UrlSafeBase64;
-
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 

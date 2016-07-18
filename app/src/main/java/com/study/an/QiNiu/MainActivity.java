@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.pili.pldroid.player.widget.PLVideoView;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -20,12 +18,9 @@ import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 import com.study.an.all.R;
-
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Arrays;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String token;
     UpCompletionHandler handler;
     UpProgressHandler progressHandler;
-    private static final int RESULT_LOAD_IMAGE=1;
+    private static final int RESULT_ALBUM_IMAGE=2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                startActivityForResult(i, RESULT_ALBUM_IMAGE);
                 break;
             default:
                 break;
@@ -167,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
+        if (requestCode == RESULT_ALBUM_IMAGE && resultCode == RESULT_OK
                 && data != null) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
