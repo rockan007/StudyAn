@@ -24,9 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -51,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qiniu_main);
+        MainActivityController.getNewInstance().setContext(this);
         key = "7DL55B.txt";
         setQiNiuConfiguration();
         findViews();
@@ -144,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.simple_upload:
-                simpleUpload(key);
+                MainActivityController.getNewInstance().getUploadToken();
+
                 break;
             case R.id.btn_downLand:
                 try {
@@ -231,6 +230,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Subscribe
     public void onEventMainThread(ArrayList<Object> list){
         int tag=(Integer) list.get(0);
+        switch (tag){
+            case QiNiuConstant.UPLOADTOKEN:
+                UploadTokenModel uploadTokenModel=(UploadTokenModel)list.get(1);
+                token=uploadTokenModel.getUptoken();
+                simpleUpload(key);
+                break;
+            case QiNiuConstant.DOWNLOADTOKEN:
+                String downloadToken=(String)list.get(1);
+                break;
+            default:
+                break;
+        }
     }
 }
 

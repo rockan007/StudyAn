@@ -2,6 +2,7 @@ package com.study.an.QiNiu;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.study.an.EventBusUtils.EventBusUtil;
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ import okhttp3.Response;
  */
 public class MainActivityController  {
     private Context mContext;
-    private MainActivityController newInstance;
-    public MainActivityController getNewInstance(){
+    private static MainActivityController newInstance;
+    public static MainActivityController getNewInstance(){
         if(newInstance==null){
             newInstance=new MainActivityController();
         }
@@ -37,7 +38,7 @@ public class MainActivityController  {
     public void getUploadToken(){
         OkHttpClient client = new OkHttpClient();
         //根据请求URL创建一个Request对象
-        Request request = new Request.Builder().url(QiNiuConstant.DOWNLOADTOKENURL).build();
+        Request request = new Request.Builder().url(QiNiuConstant.UPLOADTOKENURL).build();
         //根据Request对象发起Get同步Http请求
         Call call =client.newCall(request);
         NewCallBack callBack=new NewCallBack();
@@ -70,7 +71,8 @@ public class MainActivityController  {
             list.add(mTag);
                 switch (mTag){
                     case QiNiuConstant.UPLOADTOKEN:
-                        String uploadToken=response.body().string();
+                        Gson gson=new Gson();
+                        UploadTokenModel uploadToken= gson.fromJson(response.body().string(),UploadTokenModel.class);
                         list.add(uploadToken);
                         break;
                     case QiNiuConstant.DOWNLOADTOKEN:
