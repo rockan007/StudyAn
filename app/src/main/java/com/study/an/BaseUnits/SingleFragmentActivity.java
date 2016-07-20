@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.study.an.EventBusUtils.EventBusUtil;
 import com.study.an.all.R;
 
 
@@ -18,7 +19,9 @@ import com.study.an.all.R;
 public abstract class SingleFragmentActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private Toolbar mToolbar;
     SwipeRefreshLayout mRefreshLayout;
+
     public abstract Fragment createFragment();
+
     private boolean isRefresh = false;
 
     @Override
@@ -27,32 +30,34 @@ public abstract class SingleFragmentActivity extends AppCompatActivity implement
     }
 
     @Override
-    protected  void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        EventBusUtil.register(this);
         setContentView(R.layout.fragment_home);
-        mToolbar=(Toolbar)findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         mRefreshLayout.setOnRefreshListener(this);
-        FragmentManager fm=getSupportFragmentManager();
-        Fragment fragment=fm.findFragmentById(R.id.fragment_container);
-        if(fragment==null){
-            fragment=createFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        if (fragment == null) {
+            fragment = createFragment();
             fm.beginTransaction()
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
     }
 
-    public  Toolbar getToolbar(){
-        return  mToolbar;
+    public Toolbar getToolbar() {
+        return mToolbar;
     }
-    public boolean isRefresh(){
+
+    public boolean isRefresh() {
         return isRefresh;
     }
-    public void setRefresh(boolean refresh){
-        isRefresh=refresh;
+
+    public void setRefresh(boolean refresh) {
+        isRefresh = refresh;
     }
 
     @Override
@@ -69,6 +74,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity implement
 //        EventBusUtil.post(post);
 //        if(!isRefresh){
 //            isRefresh=true;
-        }
     }
+}
 

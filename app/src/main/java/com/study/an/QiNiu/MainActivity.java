@@ -17,10 +17,16 @@ import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
+import com.study.an.EventBusUtils.EventBusUtil;
 import com.study.an.all.R;
+
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -192,8 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //创建OkHttpClient对象，用于稍后发起请求
         OkHttpClient client = new OkHttpClient();
         //根据请求URL创建一个Request对象
-        Request request = new Request.Builder().url(getUrl("7DL55B.txt")).build();
-
+        Request request = new Request.Builder().url(QiNiuConstant.DOWNLOADTOKEN+key).build();
         //根据Request对象发起Get同步Http请求
         Call call =client.newCall(request);
         call.enqueue(new Callback() {
@@ -204,8 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                byte[] bytes = response.body().bytes();
-                String s = Arrays.toString(bytes);
+                String s = response.body().string();
                 Log.d(TAG, s);
             }
         });
@@ -213,5 +217,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setSlide(){
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBusUtil.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        EventBusUtil.unregister(this);
+        super.onPause();
+    }
+    @Subscribe
+    public void onEventMainThread(ArrayList<Object> list){
+        int tag=(Integer) list.get(0);
+    }
 }
 

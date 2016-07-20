@@ -10,10 +10,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.pili.pldroid.player.PLNetworkManager;
 import com.study.an.all.R;
-
 import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
