@@ -1,12 +1,16 @@
 package com.study.an.QiNiu;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.study.an.EventBusUtils.EventBusUtil;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -19,16 +23,17 @@ import okhttp3.Response;
  * Created by admin on 2016/7/20.
  */
 public class MainActivityController  {
+    private final static String TAG="MainActivityController";
     private Context mContext;
     private static MainActivityController newInstance;
-    public static MainActivityController getNewInstance(){
+    public static synchronized final MainActivityController getNewInstance(){
         if(newInstance==null){
             newInstance=new MainActivityController();
         }
         return newInstance;
     }
-    public MainActivityController setContext(Context context){
-        mContext=context;
+    public MainActivityController setContext(Activity activity){
+        mContext=activity;
         return this;
     }
 
@@ -58,16 +63,27 @@ public class MainActivityController  {
         callBack.setTag(QiNiuConstant.DOWNLOADTOKEN);
         call.enqueue(callBack);
     }
-    private class NewCallBack implements Callback{
-        private int mTag;
 
+    public void getDownload(String url){
+        OkHttpClient client =new OkHttpClient();
+        Request request=new Request.Builder().url(url).build();
+        Call call=client.newCall(request);
+        NewCallBack callBack=new NewCallBack();
+        callBack.setTag(QiNiuConstant.DOWNLOAD);
+        call.enqueue(callBack);
+    }
+    private class NewCallBack implements Callback{
+        private int mTag=0;
+        ArrayList<Object> list=new ArrayList<>();
         @Override
         public void onFailure(Call call, IOException e) {
-
+            list.add(mTag);
+            EventBusUtil.post(list);
         }
         @Override
         public void onResponse(Call call, Response response) throws IOException {
-            ArrayList<Object> list=new ArrayList<>();
+
+
             list.add(mTag);
                 switch (mTag){
                     case QiNiuConstant.UPLOADTOKEN:
@@ -76,8 +92,14 @@ public class MainActivityController  {
                         list.add(uploadToken);
                         break;
                     case QiNiuConstant.DOWNLOADTOKEN:
-                        String downloadToken=response.body().string();
+                        Gson gson1=new Gson();
+                        String downloadToken=gson1.fromJson(response.body().string(),String.class);
                         list.add(downloadToken);
+                        break;
+                    case QiNiuConstant.DOWNLOAD:
+                        byte[] bytes=response.body().bytes();
+                        Log.i(TAG, Arrays.toString(bytes));
+
                         break;
                     default:
                         break;

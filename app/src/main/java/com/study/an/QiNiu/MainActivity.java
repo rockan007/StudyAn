@@ -21,6 +21,7 @@ import com.study.an.EventBusUtils.EventBusUtil;
 import com.study.an.all.R;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -143,11 +144,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.simple_upload:
                 MainActivityController.getNewInstance().getUploadToken();
-
                 break;
             case R.id.btn_downLand:
                 try {
-                    getBack() ;
+                  MainActivityController.getNewInstance().getDownLoadToken(key);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             imagePutPolicy.setDeadline(3600);
             token=UploadToken.getUploadToken(imagePutPolicy);
             key=picturePath;
-            simpleUpload(picturePath);
+            MainActivityController.getNewInstance().getUploadToken();
             mImageView.setVisibility(View.VISIBLE);
             mImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));}
     }
@@ -193,26 +193,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return UploadToken.getDownLoadToken(fileName, 3600);
     }
 
-    private void getBack() throws IOException {
-        //创建OkHttpClient对象，用于稍后发起请求
-        OkHttpClient client = new OkHttpClient();
-        //根据请求URL创建一个Request对象
-        Request request = new Request.Builder().url(QiNiuConstant.DOWNLOADTOKEN+key).build();
-        //根据Request对象发起Get同步Http请求
-        Call call =client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                Log.d(TAG, s);
-            }
-        });
-    }
+//    private void getBack() throws IOException {
+//        //创建OkHttpClient对象，用于稍后发起请求
+//        OkHttpClient client = new OkHttpClient();
+//        //根据请求URL创建一个Request对象
+//        Request request = new Request.Builder().url(QiNiuConstant.DOWNLOADTOKEN+key).build();
+//        //根据Request对象发起Get同步Http请求
+//        Call call =client.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                String s = response.body().string();
+//                Log.d(TAG, s);
+//            }
+//        });
+//    }
     private void setSlide(){
     }
 
@@ -227,8 +227,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EventBusUtil.unregister(this);
         super.onPause();
     }
-    @Subscribe
-    public void onEventMainThread(ArrayList<Object> list){
+
+    /**
+     *
+     * @param list
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ArrayList<Object> list){
         int tag=(Integer) list.get(0);
         switch (tag){
             case QiNiuConstant.UPLOADTOKEN:
@@ -238,6 +243,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case QiNiuConstant.DOWNLOADTOKEN:
                 String downloadToken=(String)list.get(1);
+                String downUrl=QiNiuConstant.MAINURL+"/"+downloadToken;
+                MainActivityController.getNewInstance().getDownload(downUrl);
+                break;
+            case QiNiuConstant.DOWNLOAD:
                 break;
             default:
                 break;

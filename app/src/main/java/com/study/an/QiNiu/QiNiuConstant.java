@@ -1,6 +1,7 @@
 package com.study.an.QiNiu;
 
 /**
+ * An
  * Created by admin on 2016/7/12.
  */
 public class QiNiuConstant {
@@ -12,4 +13,5 @@ public class QiNiuConstant {
     public static final String UPLOADTOKENURL="http://192.168.0.178:8507/QiuToken.ashx";
     public static final int UPLOADTOKEN=101;
     public static final int DOWNLOADTOKEN=102;
+    public static final int DOWNLOAD=100;
 }
