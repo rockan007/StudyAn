@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCancellationSignal;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -23,13 +24,8 @@ import com.study.an.all.R;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by admin on 2016/7/6.
@@ -39,11 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mImageView;
     UploadManager uploadManager;
     String data;
-    String key;
+    String key = "7DL55B.txt";
     String token;
     UpCompletionHandler handler;
     UpProgressHandler progressHandler;
-    private static final int RESULT_ALBUM_IMAGE=2;
+    private static final int RESULT_ALBUM_IMAGE = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_duan).setOnClickListener(this);
 //        MediaController mMediaController = new MediaController(this);
 //        mVideoView.setMediaController(mMediaController);
-        mImageView=(ImageView)findViewById(R.id.iv_picture);
+        mImageView = (ImageView) findViewById(R.id.iv_picture);
     }
 
     /**
@@ -147,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_downLand:
                 try {
-                  MainActivityController.getNewInstance().getDownLoadToken(key);
+                    MainActivityController.getNewInstance().getDownLoadToken(key);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -170,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == RESULT_ALBUM_IMAGE && resultCode == RESULT_OK
                 && data != null) {
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
@@ -180,20 +176,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final String picturePath = cursor.getString(columnIndex);
             Log.d("PICTUREPATH", picturePath);
             cursor.close();
-            ImagePutPolicy imagePutPolicy=new ImagePutPolicy(picturePath);
+            ImagePutPolicy imagePutPolicy = new ImagePutPolicy(picturePath);
             imagePutPolicy.setDeadline(3600);
-            token=UploadToken.getUploadToken(imagePutPolicy);
-            key=picturePath;
+            token = UploadToken.getUploadToken(imagePutPolicy);
+            key = picturePath;
             MainActivityController.getNewInstance().getUploadToken();
             mImageView.setVisibility(View.VISIBLE);
-            mImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));}
+            mImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
     }
 
     private String getUrl(String fileName) {
         return UploadToken.getDownLoadToken(fileName, 3600);
     }
 
-//    private void getBack() throws IOException {
+    //    private void getBack() throws IOException {
 //        //创建OkHttpClient对象，用于稍后发起请求
 //        OkHttpClient client = new OkHttpClient();
 //        //根据请求URL创建一个Request对象
@@ -213,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            }
 //        });
 //    }
-    private void setSlide(){
+    private void setSlide() {
     }
 
     @Override
@@ -229,22 +226,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     *
-     * @param list
+     * @param list k
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(ArrayList<Object> list){
-        int tag=(Integer) list.get(0);
-        switch (tag){
+    public void onEvent(ArrayList<Object> list) {
+        int tag = (Integer) list.get(0);
+        switch (tag) {
             case QiNiuConstant.UPLOADTOKEN:
-                UploadTokenModel uploadTokenModel=(UploadTokenModel)list.get(1);
-                token=uploadTokenModel.getUptoken();
+                UploadTokenModel uploadTokenModel = (UploadTokenModel) list.get(1);
+                token = uploadTokenModel.getUptoken();
                 simpleUpload(key);
                 break;
             case QiNiuConstant.DOWNLOADTOKEN:
-                String downloadToken=(String)list.get(1);
-                String downUrl=QiNiuConstant.MAINURL+"/"+downloadToken;
-                MainActivityController.getNewInstance().getDownload(downUrl);
+                String downloadToken = (String) list.get(1);
+                MainActivityController.getNewInstance().getDownload(downloadToken);
                 break;
             case QiNiuConstant.DOWNLOAD:
                 break;

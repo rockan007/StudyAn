@@ -57,7 +57,7 @@ public class MainActivityController  {
      */
     public void getDownLoadToken(String fileName){
         OkHttpClient client =new OkHttpClient();
-        Request request=new Request.Builder().url(QiNiuConstant.DOWNLOADTOKENURL+fileName).build();
+        Request request=new Request.Builder().url(QiNiuConstant.DOWNLOADTOKENURL+QiNiuConstant.MAINURL+"/"+fileName).build();
         Call call=client.newCall(request);
         NewCallBack callBack=new NewCallBack();
         callBack.setTag(QiNiuConstant.DOWNLOADTOKEN);
@@ -99,7 +99,6 @@ public class MainActivityController  {
                     case QiNiuConstant.DOWNLOAD:
                         byte[] bytes=response.body().bytes();
                         Log.i(TAG, Arrays.toString(bytes));
-
                         break;
                     default:
                         break;
